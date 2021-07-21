@@ -9,7 +9,9 @@ you may not use this file except in compliance with the License.
 
 header("Content-Type: application/json");
 
-if(!isset($_GET["id"]) || !$_GET["id"]) {
+$content_id = $_GET["id"];
+
+if(!isset($content_id) || !$content_id) {
     exit("No content id specified");
 }
 
@@ -55,7 +57,7 @@ function zee5_movies($content_id) {
     echo json_encode($arr, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 }
 
-$response = @get_metadata("https://gwapi.zee5.com/content/tvshow/{$_GET['id']}?translation=en&country=IN&version=2");
+$response = @get_metadata("https://gwapi.zee5.com/content/tvshow/{$content_id}?translation=en&country=IN&version=2");
 if (array_key_exists('seasons', $response)) {
     $result = array();
     foreach($response -> seasons as $season) {
@@ -76,4 +78,4 @@ if (array_key_exists('seasons', $response)) {
 } else {
     zee5_movies($content_id);
 }
-?>                          
+?>
